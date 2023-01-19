@@ -1,0 +1,549 @@
+{
+  "Guide": {
+    "biomes": {
+      "like": "Forest",
+      "dislike": "Ocean"
+    },
+    "npcs": {
+      "love": [],
+      "like": [
+        "Clothier",
+        "Zoologist",
+        "Princess"
+      ],
+      "dislike": [
+        "Steampunker"
+      ],
+      "hate": [
+        "Painter"
+      ]
+    }
+  },
+  "Merchant": {
+    "biomes": {
+      "like": "Forest",
+      "dislike": "Desert"
+    },
+    "npcs": {
+      "love": [],
+      "like": [
+        "Golfer",
+        "Nurse",
+        "Princess"
+      ],
+      "dislike": [
+        "Tax Collector"
+      ],
+      "hate": [
+        "Angler"
+      ]
+    }
+  },
+  "Zoologist": {
+    "biomes": {
+      "like": "Forest",
+      "dislike": "Desert"
+    },
+    "npcs": {
+      "love": [
+        "Witch Doctor"
+      ],
+      "like": [
+        "Golfer",
+        "Princess"
+      ],
+      "dislike": [
+        "Angler"
+      ],
+      "hate": [
+        "Arms Dealer"
+      ]
+    }
+  },
+  "Golfer": {
+    "biomes": {
+      "like": "Forest",
+      "dislike": "Caverns"
+    },
+    "npcs": {
+      "love": [
+        "Angler"
+      ],
+      "like": [
+        "Painter",
+        "Zoologist",
+        "Princess"
+      ],
+      "dislike": [
+        "Pirate"
+      ],
+      "hate": [
+        "Merchant"
+      ]
+    }
+  },
+  "Nurse": {
+    "biomes": {
+      "like": "Hallow",
+      "dislike": "Snow"
+    },
+    "npcs": {
+      "love": [
+        "Arms Dealer"
+      ],
+      "like": [
+        "Wizard",
+        "Princess"
+      ],
+      "dislike": [
+        "Dryad",
+        "Party Girl"
+      ],
+      "hate": [
+        "Zoologist"
+      ]
+    }
+  },
+  "Tavernkeep": {
+    "biomes": {
+      "like": "Hallow",
+      "dislike": "Snow"
+    },
+    "npcs": {
+      "love": [
+        "Demolitionist"
+      ],
+      "like": [
+        "Goblin Tinkerer",
+        "Princess"
+      ],
+      "dislike": [
+        "Guide"
+      ],
+      "hate": [
+        "Dye Trader"
+      ]
+    }
+  },
+  "Party Girl": {
+    "biomes": {
+      "like": "Hallow",
+      "dislike": "Caverns"
+    },
+    "npcs": {
+      "love": [
+        "Wizard",
+        "Zoologist"
+      ],
+      "like": [
+        "Stylist",
+        "Princess"
+      ],
+      "dislike": [
+        "Merchant"
+      ],
+      "hate": [
+        "Tax Collector"
+      ]
+    }
+  },
+  "Wizard": {
+    "biomes": {
+      "like": "Hallow",
+      "dislike": "Ocean"
+    },
+    "npcs": {
+      "love": [
+        "Golfer"
+      ],
+      "like": [
+        "Merchant",
+        "Princess"
+      ],
+      "dislike": [
+        "Witch Doctor"
+      ],
+      "hate": [
+        "Cyborg"
+      ]
+    }
+  },
+  "Demolitionist": {
+    "biomes": {
+      "like": "Caverns",
+      "dislike": "Ocean"
+    },
+    "npcs": {
+      "love": [
+        "Tavernkeep"
+      ],
+      "like": [
+        "Mechanic",
+        "Princess"
+      ],
+      "dislike": [
+        "Arms Dealer",
+        "Goblin Tinkerer"
+      ],
+      "hate": []
+    }
+  },
+  "Goblin Tinkerer": {
+    "biomes": {
+      "like": "Caverns",
+      "dislike": "Jungle"
+    },
+    "npcs": {
+      "love": [
+        "Mechanic"
+      ],
+      "like": [
+        "Dye Trader",
+        "Princess"
+      ],
+      "dislike": [
+        "Clothier"
+      ],
+      "hate": [
+        "Stylist"
+      ]
+    }
+  },
+  "Clothier": {
+    "biomes": {
+      "like": "Caverns",
+      "dislike": "Hallow"
+    },
+    "npcs": {
+      "love": [
+        "Truffle"
+      ],
+      "like": [
+        "Tax Collector",
+        "Princess"
+      ],
+      "dislike": [
+        "Nurse"
+      ],
+      "hate": [
+        "Mechanic"
+      ]
+    }
+  },
+  "Dye Trader": {
+    "biomes": {
+      "like": "Desert",
+      "dislike": "Forest"
+    },
+    "npcs": {
+      "love": [],
+      "like": [
+        "Arms Dealer",
+        "Painter",
+        "Princess"
+      ],
+      "dislike": [
+        "Steampunker"
+      ],
+      "hate": [
+        "Pirate"
+      ]
+    }
+  },
+  "Arms Dealer": {
+    "biomes": {
+      "like": "Desert",
+      "dislike": "Snow"
+    },
+    "npcs": {
+      "love": [
+        "Nurse"
+      ],
+      "like": [
+        "Steampunker",
+        "Princess"
+      ],
+      "dislike": [
+        "Golfer"
+      ],
+      "hate": [
+        "Demolitionist"
+      ]
+    }
+  },
+  "Steampunker": {
+    "biomes": {
+      "like": "Desert",
+      "dislike": "Jungle"
+    },
+    "npcs": {
+      "love": [
+        "Cyborg"
+      ],
+      "like": [
+        "Painter",
+        "Princess"
+      ],
+      "dislike": [
+        "Dryad",
+        "Wizard",
+        "Party Girl"
+      ],
+      "hate": []
+    }
+  },
+  "Dryad": {
+    "biomes": {
+      "like": "Jungle",
+      "dislike": "Desert"
+    },
+    "npcs": {
+      "love": [],
+      "like": [
+        "Witch Doctor",
+        "Truffle",
+        "Princess"
+      ],
+      "dislike": [
+        "Angler"
+      ],
+      "hate": [
+        "Golfer"
+      ]
+    }
+  },
+  "Painter": {
+    "biomes": {
+      "like": "Jungle",
+      "dislike": "Forest"
+    },
+    "npcs": {
+      "love": [
+        "Dryad"
+      ],
+      "like": [
+        "Party Girl",
+        "Princess"
+      ],
+      "dislike": [
+        "Truffle",
+        "Cyborg"
+      ],
+      "hate": []
+    }
+  },
+  "Witch Doctor": {
+    "biomes": {
+      "like": "Jungle",
+      "dislike": "Hallow"
+    },
+    "npcs": {
+      "love": [],
+      "like": [
+        "Dryad",
+        "Guide",
+        "Princess"
+      ],
+      "dislike": [
+        "Nurse"
+      ],
+      "hate": [
+        "Truffle"
+      ]
+    }
+  },
+  "Stylist": {
+    "biomes": {
+      "like": "Ocean",
+      "dislike": "Snow"
+    },
+    "npcs": {
+      "love": [
+        "Dye Trader"
+      ],
+      "like": [
+        "Pirate",
+        "Princess"
+      ],
+      "dislike": [
+        "Tavernkeep"
+      ],
+      "hate": [
+        "Goblin Tinkerer"
+      ]
+    }
+  },
+  "Angler": {
+    "biomes": {
+      "like": "Ocean",
+      "dislike": "Desert"
+    },
+    "npcs": {
+      "love": [],
+      "like": [
+        "Demolitionist",
+        "Party Girl",
+        "Tax Collector",
+        "Princess"
+      ],
+      "dislike": [],
+      "hate": [
+        "Tavernkeep"
+      ]
+    }
+  },
+  "Pirate": {
+    "biomes": {
+      "like": "Ocean",
+      "dislike": "Caverns"
+    },
+    "npcs": {
+      "love": [
+        "Angler"
+      ],
+      "like": [
+        "Tavernkeep",
+        "Princess"
+      ],
+      "dislike": [
+        "Stylist"
+      ],
+      "hate": [
+        "Guide"
+      ]
+    }
+  },
+  "Mechanic": {
+    "biomes": {
+      "like": "Snow",
+      "dislike": "Caverns"
+    },
+    "npcs": {
+      "love": [
+        "Goblin Tinkerer"
+      ],
+      "like": [
+        "Cyborg",
+        "Princess"
+      ],
+      "dislike": [
+        "Arms Dealer"
+      ],
+      "hate": [
+        "Clothier"
+      ]
+    }
+  },
+  "Tax Collector": {
+    "biomes": {
+      "like": "Snow",
+      "dislike": "Hallow"
+    },
+    "npcs": {
+      "love": [
+        "Merchant"
+      ],
+      "like": [
+        "Party Girl",
+        "Princess"
+      ],
+      "dislike": [
+        "Demolitionist",
+        "Mechanic"
+      ],
+      "hate": [
+        "Santa Claus"
+      ]
+    }
+  },
+  "Cyborg": {
+    "biomes": {
+      "like": "Snow",
+      "dislike": "Jungle"
+    },
+    "npcs": {
+      "love": [],
+      "like": [
+        "Steampunker",
+        "Pirate",
+        "Stylist",
+        "Princess"
+      ],
+      "dislike": [
+        "Zoologist"
+      ],
+      "hate": [
+        "Wizard"
+      ]
+    }
+  },
+  "Santa Claus": {
+    "biomes": {
+      "love": "Snow",
+      "hate": "Desert"
+    },
+    "npcs": {
+      "love": [],
+      "like": [],
+      "dislike": [],
+      "hate": [
+        "Tax Collector"
+      ]
+    }
+  },
+  "Truffle": {
+    "biomes": {
+      "like": "Mushroom"
+    },
+    "npcs": {
+      "love": [
+        "Guide"
+      ],
+      "like": [
+        "Dryad",
+        "Princess"
+      ],
+      "dislike": [
+        "Clothier"
+      ],
+      "hate": [
+        "Witch Doctor"
+      ]
+    }
+  },
+  "Princess": {
+    "biomes": {},
+    "npcs": {
+      "love": [
+        "Guide",
+        "Merchant",
+        "Zoologist",
+        "Golfer",
+        "Nurse",
+        "Tavernkeep",
+        "Party Girl",
+        "Wizard",
+        "Demolitionist",
+        "Goblin Tinkerer",
+        "Clothier",
+        "Dye Trader",
+        "Arms Dealer",
+        "Steampunker",
+        "Dryad",
+        "Painter",
+        "Witch Doctor",
+        "Stylist",
+        "Angler",
+        "Pirate",
+        "Mechanic",
+        "Tax Collector",
+        "Cyborg",
+        "Santa Claus",
+        "Truffle"
+      ],
+      "like": [],
+      "dislike": [],
+      "hate": []
+    }
+  }
+}

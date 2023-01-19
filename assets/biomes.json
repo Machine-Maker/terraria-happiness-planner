@@ -1,0 +1,10 @@
+{
+  "Ocean": ["Forest"],
+  "Forest": ["Ocean"],
+  "Desert": ["Ocean", "Hallow", "Caverns", "Jungle", "Mushroom"],
+  "Hallow": ["Ocean", "Desert", "Caverns", "Snow", "Jungle", "Mushroom"],
+  "Caverns": ["Desert", "Hallow", "Snow", "Jungle", "Mushroom"],
+  "Snow": ["Ocean", "Hallow", "Caverns", "Jungle", "Mushroom"],
+  "Jungle": ["Ocean", "Desert", "Hallow", "Caverns", "Snow", "Mushroom"],
+  "Mushroom": ["Ocean", "Desert", "Hallow", "Caverns", "Snow", "Jungle"]
+}
