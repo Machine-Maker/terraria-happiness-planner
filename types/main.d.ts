@@ -2,13 +2,15 @@ declare module "terraria" {
   import biomes from "~/assets/biomes.json";
   import npcs from "~/assets/npcs.json";
 
+  type Attitude = "love" | "like" | "dislike" | "hate";
+
   type Biome = keyof typeof biomes;
   type BiomeData = { [b in Biome]: Biome[] };
 
   type NPC = keyof typeof npcs;
   type NPCEntry = {
-    biomes: { [k in "love" | "like" | "dislike" | "hate"]?: Biome };
-    npcs: { [k in "love" | "like" | "dislike" | "hate"]: NPC[] };
+    biomes: { [k in Attitude]?: Biome };
+    npcs: { [k in Attitude]: NPC[] };
   };
   type NPCData = { [npc in NPC]: NPCEntry };
 
@@ -31,7 +33,7 @@ declare module "terraria" {
 
   type AttitudeCause = {
     target: NPC | Biome;
-    attitude: "love" | "like" | "dislike" | "hate";
+    attitude: Attitude;
   };
 
   type HappinessResult = {

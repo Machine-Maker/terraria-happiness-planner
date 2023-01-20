@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { filename } from "pathe/utils";
 import { HappinessModifier, HappinessResult, NPC } from "terraria";
 
 const props = defineProps<{
@@ -36,13 +37,16 @@ function printCause(modifier: HappinessModifier): string {
   }
 }
 
-function prettyPrintPercent(num: number) {
-  return Number(Math.round((num + Number.EPSILON) * 100) / 100).toLocaleString(undefined, { style: "percent", signDisplay: "exceptZero" });
+const glob = import.meta.glob("~/assets/images/npcs/*.webp", { eager: true }) as Record<string, any>;
+const images = Object.fromEntries(Object.entries(glob).map(([key, value]) => [filename(key), value.default]));
+
+function getNpcImage() {
+  return images[props.npc.replace(" ", "_")];
 }
 </script>
 <template>
   <div class="draggable pa-1 ma-1" :class="happiness ? 'w-100 happiness' : 'flex-grow-1'" draggable="true">
-    <img :src="`/images/npcs/${npc.replace(' ', '_')}.webp`" :alt="npc" />
+    <img :src="getNpcImage()" :alt="npc" />
     <template v-if="happiness">
       <span class="ml-1" :class="textColor">{{ happiness.resultFormatted }}</span>
       <VMenu open-on-hover>
@@ -51,7 +55,7 @@ function prettyPrintPercent(num: number) {
         </template>
         <VSheet color="accent" rounded class="pa-2">
           <div v-for="(modifier, idx) in happiness.modifiers" :key="`npc-${npc}-happiness-${idx}`">
-            {{ prettyPrintPercent(modifier.amount) + " " + printCause(modifier) }}
+            {{ formatAsPercent(modifier.amount, true) + " " + printCause(modifier) }}
           </div>
         </VSheet>
       </VMenu>

@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import biomeData from "~/assets/biomes.json";
 import npcData from "~/assets/npcs.json";
-import { AttitudeCause, Biome, BiomeData, HappinessModifier, HappinessResult, HousingGroup, HousingWorld, NPC, NPCData, NPCHolder } from "terraria";
+import { Attitude, AttitudeCause, Biome, BiomeData, HappinessModifier, HappinessResult, HousingGroup, HousingWorld, NPC, NPCData, NPCHolder } from "terraria";
 import { Ref } from "vue";
 
-const attitudeHappiness: { [k in AttitudeCause["attitude"]]: number } = {
+const attitudeHappiness: { [k in Attitude]: number } = {
   love: -0.12,
   like: -0.06,
   dislike: 0.06,
@@ -13,6 +13,10 @@ const attitudeHappiness: { [k in AttitudeCause["attitude"]]: number } = {
 const biomes = biomeData as BiomeData;
 const possibleBiomes = Object.keys(biomes) as Biome[];
 const npcs = npcData as NPCData;
+
+enum TerrariaDataTypes {
+  NPC = "terraria/npc",
+}
 
 const world: Ref<HousingWorld> = ref({
   houses: [],
@@ -52,14 +56,23 @@ function removeNpc(holder: NPCHolder, npc: NPC) {
 
 function onNpcDragStart(event: DragEvent, npc: NPC) {
   if (event.dataTransfer) {
-    event.dataTransfer.dropEffect = "move";
+    event.dataTransfer.effectAllowed = "copy";
     event.dataTransfer.setData("terraria/npc", npc);
     npcLog("Started dragging npc: %s", npc);
   }
 }
 
+function onNpcDragEnter(event: DragEvent) {
+  console.log(event.target);
+  if (event.dataTransfer && event.dataTransfer.types.includes(TerrariaDataTypes.NPC)) {
+    event.dataTransfer.dropEffect = "copy";
+    event.preventDefault();
+  }
+}
+
 function allowDrop(event: DragEvent, type: string) {
   if (event.dataTransfer && event.dataTransfer.types.includes(type)) {
+    event.dataTransfer.dropEffect = "copy";
     event.preventDefault();
   }
 }
@@ -110,12 +123,10 @@ function calculateHappiness(house: HousingGroup, npc: NPC): HappinessResult {
   happiness += calculateNpcNeighborsHappiness(house, npc, modifiers, "dislike");
   happiness += calculateNpcNeighborsHappiness(house, npc, modifiers, "hate");
 
-  console.log(happiness);
-  console.log(modifiers);
-  const result = Math.min(Math.max(Math.round((happiness + Number.EPSILON) * 100) / 100, 0.75), 1.5);
+  const result = clamp(happiness, 0.75, 1.5);
   return {
     result,
-    resultFormatted: result.toLocaleString(undefined, { style: "percent" }),
+    resultFormatted: formatAsPercent(result),
     modifiers: modifiers,
   };
 }
@@ -146,10 +157,18 @@ function calculateNpcNeighborsHappiness(house: HousingGroup, npc: NPC, modifiers
 
 <template>
   <VContainer>
-    <VBtn v-if="world.npcs.length" class="add-house-btn" color="primary" @click="addHouse">+ House</VBtn>
+    <VBtn v-if="world.npcs.length" block color="primary" class="mb-2" @click="addHouse">+ House</VBtn>
     <VRow>
       <VCol cols="4">
-        <VSheet elevation="3" rounded color="info" class="pa-2 d-flex flex-wrap" @dragover="allowDrop($event, 'terraria/npc')" @drop="moveNpc($event, world)">
+        <VSheet
+          elevation="3"
+          rounded
+          color="info"
+          class="pa-2 d-flex flex-wrap"
+          @dragenter="onNpcDragEnter"
+          @dragover="allowDrop($event, 'terraria/npc')"
+          @drop="moveNpc($event, world)"
+        >
           <NPCInfo v-for="npc in world.npcs" :key="`npc-left-${npc}`" :npc="npc" @dragstart="onNpcDragStart($event, npc)">
             <img :src="`/images/npcs/${npc.replace(' ', '_')}.webp`" :alt="npc" />
             <span class="ml-1 flex-grow-1 text-right">{{ npc }}</span>
@@ -167,6 +186,7 @@ function calculateNpcNeighborsHappiness(house: HousingGroup, npc: NPC, modifiers
                 color="info"
                 min-height="50"
                 class="d-flex flex-column align-center px-2 py-1"
+                @dragenter="onNpcDragEnter"
                 @dragover="allowDrop($event, 'terraria/npc')"
                 @drop="moveNpc($event, house)"
               >
@@ -186,12 +206,3 @@ function calculateNpcNeighborsHappiness(house: HousingGroup, npc: NPC, modifiers
     </VRow>
   </VContainer>
 </template>
-<style lang="scss">
-.add-house-btn {
-  position: fixed;
-  width: 95%;
-  top: 0;
-  left: 2.5%;
-  margin-bottom: 10px;
-}
-</style>

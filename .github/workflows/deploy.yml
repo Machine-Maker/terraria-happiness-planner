@@ -1,0 +1,27 @@
+name: Deploy Static Site
+concurrency:
+  group: master-deploy
+  cancel-in-progress: true
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        name: Checkout repo
+      - uses: pnpm/action-setup@v2
+        name: Setup pnpm
+        with:
+          version: ^7.25.0
+      - uses: actions/setup-node@v3
+        name: Setup NodeJS 18
+        with:
+          node-version: 18
+          cache: pnpm
+      - name: Deploy
+        run: ./deploy.sh
