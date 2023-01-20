@@ -9,4 +9,4 @@ printf ".DS_Store\n" > .gitignore
 touch .nojekyll
 git add -A
 git commit -m "$commit_msg"
-git push -f git@github.com:Machine-Maker/terraria-npc-happiness.git HEAD:gh-pages
+git push -f HEAD:gh-pages
