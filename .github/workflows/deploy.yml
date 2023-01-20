@@ -1,15 +1,21 @@
 name: Deploy Static Site
+
 concurrency:
   group: master-deploy
   cancel-in-progress: true
+
 on:
   push:
     branches:
       - master
 
+permissions:
+  contents: write
+
 jobs:
   deploy:
     name: Deploy
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -23,5 +29,18 @@ jobs:
         with:
           node-version: 18
           cache: pnpm
-      - name: Deploy
-        run: ./deploy.sh
+      - name: Build
+        id: build-site
+        run: |
+          pnpm install
+          pnpm generate
+          echo "COMMIT_MSG=$(git log --format=reference -1)" >> $GITHUB_OUTPUT
+      - uses: JamesIves/github-pages-deploy-action@v4.4.1
+        name: Deploy
+        with:
+          folder: dist
+          branch: gh-pages
+          git-config-name: GitHub Action
+          git-config-email: action@github.com
+          commit-message: ${{ steps.build-site.outputs.COMMIT_MSG }}
+          single-commit: true

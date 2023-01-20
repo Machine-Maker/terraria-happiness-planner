@@ -32,6 +32,14 @@ function addHouse() {
   world.value.houses.push(house);
 }
 
+function removeHouse(houseIdx: number) {
+  const house = world.value.houses[houseIdx];
+  for (const npc of house.npcs) {
+    moveNpc(npc, world.value, house);
+  }
+  world.value.houses.splice(houseIdx, 1);
+}
+
 function validBiomes(house: HousingGroup, includeCurrent = false) {
   const validBiomes = new Set<Biome>();
   for (const possibleBiome of possibleBiomes) {
@@ -57,13 +65,12 @@ function removeNpc(holder: NPCHolder, npc: NPC) {
 function onNpcDragStart(event: DragEvent, npc: NPC) {
   if (event.dataTransfer) {
     event.dataTransfer.effectAllowed = "copy";
-    event.dataTransfer.setData("terraria/npc", npc);
+    event.dataTransfer.setData(TerrariaDataTypes.NPC, npc);
     npcLog("Started dragging npc: %s", npc);
   }
 }
 
 function onNpcDragEnter(event: DragEvent) {
-  console.log(event.target);
   if (event.dataTransfer && event.dataTransfer.types.includes(TerrariaDataTypes.NPC)) {
     event.dataTransfer.dropEffect = "copy";
     event.preventDefault();
@@ -77,20 +84,24 @@ function allowDrop(event: DragEvent, type: string) {
   }
 }
 
-function moveNpc(event: DragEvent, newHolder: NPCHolder) {
+function dropNpc(event: DragEvent, newHolder: NPCHolder) {
   if (event.dataTransfer) {
-    const npc = event.dataTransfer.getData("terraria/npc") as NPC;
+    const npc = event.dataTransfer.getData(TerrariaDataTypes.NPC) as NPC;
     if (newHolder.npcs.includes(npc)) {
       return;
     }
-    const currentNpcHolder = findNpcHolder(npc);
-    if (!currentNpcHolder) {
-      npcLog("Could not find the current NPCHolder for %s", npc);
-    } else {
-      npcLog("Moving npc %s from current holder %s to new holder %s", npc, "houses" in currentNpcHolder ? "'world'" : "'house'");
-      removeNpc(currentNpcHolder, npc);
-      addNpc(newHolder, npc);
-    }
+    moveNpc(npc, newHolder);
+  }
+}
+
+function moveNpc(npc: NPC, newHolder: NPCHolder, currentHolder?: NPCHolder) {
+  const currentNpcHolder = currentHolder || findNpcHolder(npc);
+  if (!currentNpcHolder) {
+    npcLog("Could not find the current NPCHolder for %s", npc);
+  } else {
+    npcLog("Moving npc %s from current holder %s to new holder %s", npc, "houses" in currentNpcHolder ? "'world'" : "'house'");
+    removeNpc(currentNpcHolder, npc);
+    addNpc(newHolder, npc);
   }
 }
 
@@ -167,7 +178,7 @@ function calculateNpcNeighborsHappiness(house: HousingGroup, npc: NPC, modifiers
           class="pa-2 d-flex flex-wrap"
           @dragenter="onNpcDragEnter"
           @dragover="allowDrop($event, 'terraria/npc')"
-          @drop="moveNpc($event, world)"
+          @drop="dropNpc($event, world)"
         >
           <NPCInfo v-for="npc in world.npcs" :key="`npc-left-${npc}`" :npc="npc" @dragstart="onNpcDragStart($event, npc)">
             <img :src="`/images/npcs/${npc.replace(' ', '_')}.webp`" :alt="npc" />
@@ -177,8 +188,9 @@ function calculateNpcNeighborsHappiness(house: HousingGroup, npc: NPC, modifiers
       </VCol>
       <VCol cols="8">
         <VRow>
-          <VCol v-for="(house, i) in world.houses" :key="`house-${i}`" cols="6">
-            <VSheet elevation="3" rounded class="pa-3">
+          <VCol v-for="(house, houseIdx) in world.houses" :key="`house-${houseIdx}`" cols="6">
+            <VSheet elevation="3" rounded class="pa-3 fab-parent">
+              <VBtn class="fab close" icon="mdi-close" size="small" color="error" density="comfortable" @click="removeHouse(houseIdx)" />
               <VSelect v-model="house.biomes" :items="validBiomes(house, true)" color="primary" label="Biomes" density="compact" multiple clearable />
               <VSheet
                 elevation="3"
@@ -188,11 +200,11 @@ function calculateNpcNeighborsHappiness(house: HousingGroup, npc: NPC, modifiers
                 class="d-flex flex-column align-center px-2 py-1"
                 @dragenter="onNpcDragEnter"
                 @dragover="allowDrop($event, 'terraria/npc')"
-                @drop="moveNpc($event, house)"
+                @drop="dropNpc($event, house)"
               >
                 <NPCInfo
                   v-for="npc in house.npcs"
-                  :key="`house-${i}-npc-${npc}`"
+                  :key="`house-${houseIdx}-npc-${npc}`"
                   :npc="npc"
                   :happiness="calculateHappiness(house, npc)"
                   @dragstart="onNpcDragStart($event, npc)"
@@ -206,3 +218,17 @@ function calculateNpcNeighborsHappiness(house: HousingGroup, npc: NPC, modifiers
     </VRow>
   </VContainer>
 </template>
+<style lang="scss" scoped>
+.fab-parent {
+  position: relative;
+}
+
+.fab {
+  position: absolute;
+
+  &.close {
+    top: -10px;
+    right: -10px;
+  }
+}
+</style>
