@@ -170,7 +170,7 @@ function calculateNpcNeighborsHappiness(house: HousingGroup, npc: NPC, modifiers
   <VContainer>
     <VBtn v-if="world.npcs.length" block color="primary" class="mb-2" @click="addHouse">+ House</VBtn>
     <VRow>
-      <VCol cols="4">
+      <VCol cols="12" sm="4" lg="3" xl="2">
         <VSheet
           elevation="3"
           rounded
@@ -186,9 +186,9 @@ function calculateNpcNeighborsHappiness(house: HousingGroup, npc: NPC, modifiers
           </NPCInfo>
         </VSheet>
       </VCol>
-      <VCol cols="8">
+      <VCol cols="12" sm="8" lg="9" xl="10">
         <VRow>
-          <VCol v-for="(house, houseIdx) in world.houses" :key="`house-${houseIdx}`" cols="6">
+          <VCol v-for="(house, houseIdx) in world.houses" :key="`house-${houseIdx}`" cols="12" md="6" lg="4" xl="2">
             <VSheet elevation="3" rounded class="pa-3 fab-parent">
               <VBtn class="fab close" icon="mdi-close" size="small" color="error" density="comfortable" @click="removeHouse(houseIdx)" />
               <VSelect v-model="house.biomes" :items="validBiomes(house, true)" color="primary" label="Biomes" density="compact" multiple clearable />
