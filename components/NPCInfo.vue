@@ -1,10 +1,15 @@
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+};
+</script>
 <script setup lang="ts">
-import { filename } from "pathe/utils";
 import { HappinessModifier, HappinessResult, NPC } from "terraria";
 
 const props = defineProps<{
   npc: NPC;
   happiness?: HappinessResult;
+  image: string;
 }>();
 
 const textColor = computed(() => {
@@ -36,17 +41,11 @@ function printCause(modifier: HappinessModifier): string {
     return `(${modifier.cause.attitude}) ${modifier.cause.target}`;
   }
 }
-
-const glob = import.meta.glob("~/assets/images/npcs/*.webp", { eager: true }) as Record<string, any>;
-const images = Object.fromEntries(Object.entries(glob).map(([key, value]) => [filename(key), value.default]));
-
-function getNpcImage() {
-  return images[props.npc.replace(" ", "_")];
-}
 </script>
 <template>
-  <div class="draggable pa-1 ma-1" :class="happiness ? 'w-100 happiness' : 'flex-grow-1'" draggable="true">
-    <img :src="getNpcImage()" :alt="npc" />
+  <input :id="`radio-${npc}`" type="checkbox" class="draggable-check" />
+  <label :for="`radio-${npc}`" class="draggable pa-1 ma-1" :class="happiness ? 'w-100 happiness' : 'flex-grow-1'" draggable="true" v-bind="$attrs">
+    <img :src="image" :alt="npc" />
     <template v-if="happiness">
       <span class="ml-1" :class="textColor">{{ happiness.resultFormatted }}</span>
       <VMenu open-on-hover>
@@ -61,15 +60,35 @@ function getNpcImage() {
       </VMenu>
     </template>
     <span class="flex-grow-1 text-right" :class="textColor">{{ npc }}</span>
-  </div>
+  </label>
 </template>
 <style lang="scss" scoped>
 .draggable {
-  cursor: move;
+  cursor: pointer;
   background-color: #0002;
   border-radius: 6px;
   display: flex;
   align-items: center;
+  border: transparent 2px solid;
+  box-sizing: border-box;
+
+  &-check {
+    display: none;
+
+    &:checked + .draggable {
+      @extend .draggable;
+      border-color: darkgray;
+      background-color: #0003;
+
+      &.happiness {
+        background-color: #0005;
+
+        &:hover {
+          background-color: #0006;
+        }
+      }
+    }
+  }
 
   &:hover {
     background-color: #0004;

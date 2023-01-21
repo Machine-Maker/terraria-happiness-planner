@@ -3,6 +3,7 @@ import biomeData from "~/assets/biomes.json";
 import npcData from "~/assets/npcs.json";
 import { Attitude, AttitudeCause, Biome, BiomeData, HappinessModifier, HappinessResult, HousingGroup, HousingWorld, NPC, NPCData, NPCHolder } from "terraria";
 import { Ref } from "vue";
+import { filename } from "pathe/utils";
 
 const attitudeHappiness: { [k in Attitude]: number } = {
   love: -0.12,
@@ -164,12 +165,41 @@ function calculateNpcNeighborsHappiness(house: HousingGroup, npc: NPC, modifiers
   }
   return happinessDelta;
 }
+
+const images = {
+  npcs: gatherImages(import.meta.glob("~/assets/images/npcs/*.webp", { eager: true }) as Record<string, any>),
+  biomes: gatherImages(import.meta.glob("~/assets/images/biomes/*.webp", { eager: true }) as Record<string, any>),
+};
+
+function gatherImages(modules: Record<string, any>) {
+  return Object.fromEntries(Object.entries(modules).map(([key, value]) => [filename(key), value.default]));
+}
+
+function getNpcImage(npc: NPC) {
+  return images.npcs[npc.replace(" ", "_")];
+}
 </script>
 
 <template>
   <VContainer>
-    <VBtn v-if="world.npcs.length" block color="primary" class="mb-2" @click="addHouse">+ House</VBtn>
-    <VRow>
+    <VRow dense>
+      <VCol cols="12" lg="9">
+        <VSheet class="d-flex justify-space-around align-center flex-wrap" rounded color="secondary">
+          <template v-for="biome in possibleBiomes" :key="biome">
+            <input :id="`biome-radio-${biome}`" type="radio" name="biome-radio" style="display: none" />
+            <label :for="`biome-radio-${biome}`" class="d-flex align-center justify-center pa-1 ma-1 flex-grow-1 biome">
+              <img :src="images.biomes[biome]" :alt="biome" />
+              <span class="ml-1">{{ biome }}</span>
+            </label>
+          </template>
+          <VBtn icon="mdi-sync" density="compact" color="primary" class="ma-2" />
+        </VSheet>
+      </VCol>
+      <VCol cols="12" lg="3">
+        <VBtn v-if="world.npcs.length" block color="primary" class="h-100" @click="addHouse">+ House</VBtn>
+      </VCol>
+    </VRow>
+    <VRow dense>
       <VCol cols="12" sm="4" lg="3" xl="2">
         <VSheet
           elevation="3"
@@ -180,7 +210,8 @@ function calculateNpcNeighborsHappiness(house: HousingGroup, npc: NPC, modifiers
           @dragover="allowDrop($event, 'terraria/npc')"
           @drop="dropNpc($event, world)"
         >
-          <NPCInfo v-for="npc in world.npcs" :key="`npc-left-${npc}`" :npc="npc" @dragstart="onNpcDragStart($event, npc)">
+          <span class="flex-full-text text-center text-caption">Drag NPCs to Houses</span>
+          <NPCInfo v-for="npc in world.npcs" :key="`npc-left-${npc}`" :npc="npc" :image="getNpcImage(npc)" @dragstart="onNpcDragStart($event, npc)">
             <img :src="`/images/npcs/${npc.replace(' ', '_')}.webp`" :alt="npc" />
             <span class="ml-1 flex-grow-1 text-right">{{ npc }}</span>
           </NPCInfo>
@@ -191,13 +222,13 @@ function calculateNpcNeighborsHappiness(house: HousingGroup, npc: NPC, modifiers
           <VCol v-for="(house, houseIdx) in world.houses" :key="`house-${houseIdx}`" cols="12" md="6" lg="4" xl="2">
             <VSheet elevation="3" rounded class="pa-3 fab-parent">
               <VBtn class="fab close" icon="mdi-close" size="small" color="error" density="comfortable" @click="removeHouse(houseIdx)" />
-              <VSelect v-model="house.biomes" :items="validBiomes(house, true)" color="primary" label="Biomes" density="compact" multiple clearable />
+              <VSelect v-model="house.biomes" :items="validBiomes(house, true)" color="primary" label="Biomes" density="comfortable" multiple clearable />
               <VSheet
                 elevation="3"
                 rounded
                 color="info"
                 min-height="50"
-                class="d-flex flex-column align-center px-2 py-1"
+                class="d-flex flex-wrap align-center px-2 py-1"
                 @dragenter="onNpcDragEnter"
                 @dragover="allowDrop($event, 'terraria/npc')"
                 @drop="dropNpc($event, house)"
@@ -206,10 +237,12 @@ function calculateNpcNeighborsHappiness(house: HousingGroup, npc: NPC, modifiers
                   v-for="npc in house.npcs"
                   :key="`house-${houseIdx}-npc-${npc}`"
                   :npc="npc"
+                  :image="getNpcImage(npc)"
                   :happiness="calculateHappiness(house, npc)"
+                  class="flex-full"
                   @dragstart="onNpcDragStart($event, npc)"
                 />
-                <span class="font-italic text-caption mt-3">Drop NPCs Here</span>
+                <span class="flex-full-text text-caption my-4">Drop NPCs Here</span>
               </VSheet>
             </VSheet>
           </VCol>
@@ -219,16 +252,19 @@ function calculateNpcNeighborsHappiness(house: HousingGroup, npc: NPC, modifiers
   </VContainer>
 </template>
 <style lang="scss" scoped>
-.fab-parent {
-  position: relative;
+:checked + .biome {
+  border-color: gray;
+  background-color: #0003;
 }
 
-.fab {
-  position: absolute;
+.biome {
+  cursor: pointer;
+  border-radius: 6px;
+  border: transparent 2px solid;
+  box-sizing: border-box;
 
-  &.close {
-    top: -10px;
-    right: -10px;
+  &:hover {
+    background-color: #0004;
   }
 }
 </style>

@@ -1,0 +1,21 @@
+.flex-full {
+  flex-basis: 100%;
+
+  &-text {
+    @extend .flex-full;
+    text-align: center;
+  }
+}
+
+.fab-parent {
+  position: relative;
+}
+
+.v-btn--icon.fab {
+  position: absolute;
+
+  &.close {
+    top: -10px;
+    right: -10px;
+  }
+}

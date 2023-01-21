@@ -3,7 +3,7 @@ import vuetify from "vite-plugin-vuetify";
 
 export default defineNuxtConfig({
   ssr: true,
-  css: ["vuetify/styles", "@mdi/font/css/materialdesignicons.css"],
+  css: ["vuetify/styles", "@mdi/font/css/materialdesignicons.css", "~/assets/css/main.scss"],
   build: {
     transpile: ["vuetify"],
   },
