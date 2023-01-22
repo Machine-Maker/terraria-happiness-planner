@@ -10,11 +10,13 @@
   "devDependencies": {
     "@mdi/font": "^7.1.96",
     "@nuxt/eslint-config": "^0.1.1",
+    "@pinia/nuxt": "^0.4.6",
     "@types/debug": "^4.1.7",
     "eslint": "^8.32.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
     "nuxt": "^3.0.0",
+    "pinia": "^2.0.29",
     "prettier": "^2.8.3",
     "sass": "^1.57.1",
     "vite-plugin-vuetify": "^1.0.1"

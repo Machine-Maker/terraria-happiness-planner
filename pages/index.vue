@@ -1,9 +1,7 @@
 <script lang="ts" setup>
-import biomeData from "~/assets/biomes.json";
-import npcData from "~/assets/npcs.json";
-import { Attitude, AttitudeCause, Biome, BiomeData, HappinessModifier, HappinessResult, HousingGroup, HousingWorld, NPC, NPCData, NPCHolder } from "terraria";
+import { Attitude, AttitudeCause, Biome, HappinessModifier, HappinessResult, HousingGroup, HousingWorld, NPC, NPCHolder } from "terraria";
 import { Ref } from "vue";
-import { filename } from "pathe/utils";
+import { useDataStore } from "~/store/data";
 
 const attitudeHappiness: { [k in Attitude]: number } = {
   love: -0.12,
@@ -11,17 +9,16 @@ const attitudeHappiness: { [k in Attitude]: number } = {
   dislike: 0.06,
   hate: 0.12,
 };
-const biomes = biomeData as BiomeData;
-const possibleBiomes = Object.keys(biomes) as Biome[];
-const npcs = npcData as NPCData;
 
 enum TerrariaDataTypes {
   NPC = "terraria/npc",
 }
 
+const dataStore = useDataStore();
+
 const world: Ref<HousingWorld> = ref({
   houses: [],
-  npcs: Object.keys(npcs) as NPC[],
+  npcs: [...dataStore.possibleNpcs],
 });
 
 function addHouse() {
@@ -43,12 +40,12 @@ function removeHouse(houseIdx: number) {
 
 function validBiomes(house: HousingGroup, includeCurrent = false) {
   const validBiomes = new Set<Biome>();
-  for (const possibleBiome of possibleBiomes) {
+  for (const possibleBiome of dataStore.possibleBiomes) {
     if (house.biomes.includes(possibleBiome)) {
       if (includeCurrent) {
         validBiomes.add(possibleBiome);
       }
-    } else if (house.biomes.every((b) => biomes[b].includes(possibleBiome))) {
+    } else if (house.biomes.every((b) => dataStore.biomes[b].includes(possibleBiome))) {
       validBiomes.add(possibleBiome);
     }
   }
@@ -144,7 +141,7 @@ function calculateHappiness(house: HousingGroup, npc: NPC): HappinessResult {
 }
 
 function calculateNpcBiomeHappiness(house: HousingGroup, npc: NPC, modifiers: HappinessModifier[], attitude: AttitudeCause["attitude"]): number {
-  const biome = npcs[npc].biomes[attitude];
+  const biome = dataStore.npcs[npc].biomes[attitude];
   if (biome && house.biomes.includes(biome)) {
     modifiers.push({ amount: attitudeHappiness[attitude], cause: { attitude, target: biome } });
     return attitudeHappiness[attitude];
@@ -153,7 +150,7 @@ function calculateNpcBiomeHappiness(house: HousingGroup, npc: NPC, modifiers: Ha
 }
 
 function calculateNpcNeighborsHappiness(house: HousingGroup, npc: NPC, modifiers: HappinessModifier[], attitude: AttitudeCause["attitude"]): number {
-  const otherNpcs = npcs[npc].npcs[attitude];
+  const otherNpcs = dataStore.npcs[npc].npcs[attitude];
   let happinessDelta = 0;
   if (otherNpcs.length) {
     for (const otherNpc of otherNpcs) {
@@ -165,38 +162,19 @@ function calculateNpcNeighborsHappiness(house: HousingGroup, npc: NPC, modifiers
   }
   return happinessDelta;
 }
-
-const images = {
-  npcs: gatherImages(import.meta.glob("~/assets/images/npcs/*.webp", { eager: true }) as Record<string, any>),
-  biomes: gatherImages(import.meta.glob("~/assets/images/biomes/*.webp", { eager: true }) as Record<string, any>),
-};
-
-function gatherImages(modules: Record<string, any>) {
-  return Object.fromEntries(Object.entries(modules).map(([key, value]) => [filename(key), value.default]));
-}
-
-function getNpcImage(npc: NPC) {
-  return images.npcs[npc.replace(" ", "_")];
-}
 </script>
 
 <template>
   <VContainer>
     <VRow dense>
       <VCol cols="12" lg="9">
-        <VSheet class="d-flex justify-space-around align-center flex-wrap" rounded color="secondary">
-          <template v-for="biome in possibleBiomes" :key="biome">
-            <input :id="`biome-radio-${biome}`" type="radio" name="biome-radio" style="display: none" />
-            <label :for="`biome-radio-${biome}`" class="d-flex align-center justify-center pa-1 ma-1 flex-grow-1 biome">
-              <img :src="images.biomes[biome]" :alt="biome" />
-              <span class="ml-1">{{ biome }}</span>
-            </label>
-          </template>
-          <VBtn icon="mdi-sync" density="compact" color="primary" class="ma-2" />
-        </VSheet>
+        <BiomeSelect />
       </VCol>
       <VCol cols="12" lg="3">
-        <VBtn v-if="world.npcs.length" block color="primary" class="h-100" @click="addHouse">+ House</VBtn>
+        <VBtn v-if="world.npcs.length" block color="primary" class="h-100" @click="addHouse">
+          <v-icon icon="mdi-plus" size="2.5rem" />
+          <v-icon icon="mdi-home" size="3rem" />
+        </VBtn>
       </VCol>
     </VRow>
     <VRow dense>
@@ -211,7 +189,7 @@ function getNpcImage(npc: NPC) {
           @drop="dropNpc($event, world)"
         >
           <span class="flex-full-text text-center text-caption">Drag NPCs to Houses</span>
-          <NPCInfo v-for="npc in world.npcs" :key="`npc-left-${npc}`" :npc="npc" :image="getNpcImage(npc)" @dragstart="onNpcDragStart($event, npc)">
+          <NPCInfo v-for="npc in world.npcs" :key="`npc-left-${npc}`" :npc="npc" :image="dataStore.getNpcImage(npc)" @dragstart="onNpcDragStart($event, npc)">
             <img :src="`/images/npcs/${npc.replace(' ', '_')}.webp`" :alt="npc" />
             <span class="ml-1 flex-grow-1 text-right">{{ npc }}</span>
           </NPCInfo>
@@ -219,10 +197,20 @@ function getNpcImage(npc: NPC) {
       </VCol>
       <VCol cols="12" sm="8" lg="9" xl="10">
         <VRow>
-          <VCol v-for="(house, houseIdx) in world.houses" :key="`house-${houseIdx}`" cols="12" md="6" lg="4" xl="2">
+          <VCol v-for="(house, houseIdx) in world.houses" :key="`house-${houseIdx}`" cols="12" lg="6" xl="4">
             <VSheet elevation="3" rounded class="pa-3 fab-parent">
               <VBtn class="fab close" icon="mdi-close" size="small" color="error" density="comfortable" @click="removeHouse(houseIdx)" />
-              <VSelect v-model="house.biomes" :items="validBiomes(house, true)" color="primary" label="Biomes" density="comfortable" multiple clearable />
+              <VSelect
+                v-model="house.biomes"
+                :items="validBiomes(house, true)"
+                color="primary"
+                label="Biomes"
+                density="comfortable"
+                class="mb-1"
+                multiple
+                clearable
+                hide-details
+              />
               <VSheet
                 elevation="3"
                 rounded
@@ -237,7 +225,7 @@ function getNpcImage(npc: NPC) {
                   v-for="npc in house.npcs"
                   :key="`house-${houseIdx}-npc-${npc}`"
                   :npc="npc"
-                  :image="getNpcImage(npc)"
+                  :image="dataStore.getNpcImage(npc)"
                   :happiness="calculateHappiness(house, npc)"
                   class="flex-full"
                   @dragstart="onNpcDragStart($event, npc)"
@@ -251,20 +239,3 @@ function getNpcImage(npc: NPC) {
     </VRow>
   </VContainer>
 </template>
-<style lang="scss" scoped>
-:checked + .biome {
-  border-color: gray;
-  background-color: #0003;
-}
-
-.biome {
-  cursor: pointer;
-  border-radius: 6px;
-  border: transparent 2px solid;
-  box-sizing: border-box;
-
-  &:hover {
-    background-color: #0004;
-  }
-}
-</style>

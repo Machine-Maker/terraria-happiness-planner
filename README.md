@@ -1,42 +1,32 @@
-# Nuxt 3 Minimal Starter
+# Terraria NPC Happiness Planner
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+A planning tool to get the happiness values for Terraria NPCs that you want.
+App can be viewed at https://terraria-npc-happiness.machinemaker.me.
 
-## Setup
+## Local Development
 
-Make sure to install the dependencies:
+### Setup
+
+Make sure to install the dependencies. This project uses pnpm for package management.
+You can find [info about and install it here](https://pnpm.io/).
 
 ```bash
-# yarn
-yarn install
-
-# npm
-npm install
-
-# pnpm
 pnpm install
 ```
 
-## Development Server
+### Development Server
 
-Start the development server on http://localhost:3000
-
-```bash
-npm run dev
-```
-
-## Production
-
-Build the application for production:
+Start the development server on http://localhost:3000:
 
 ```bash
-npm run build
+pnpm dev
 ```
 
-Locally preview production build:
+### Production
+
+Build the application for production. This isn't a complicated app so
+using Nuxt's static site generation is plenty.
 
 ```bash
-npm run preview
+pnpm generate
 ```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
