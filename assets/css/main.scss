@@ -1,5 +1,5 @@
 .flex-full {
-  flex-basis: 100%;
+  flex-basis: 100% !important;
 
   &-text {
     @extend .flex-full;

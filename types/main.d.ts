@@ -16,6 +16,7 @@ declare module "terraria" {
 
   type NPCHolder = {
     npcs: NPC[];
+    selected: NPC[];
   };
 
   type HousingGroup = NPCHolder & {
