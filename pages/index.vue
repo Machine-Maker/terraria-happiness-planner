@@ -93,7 +93,7 @@ function findNpcHolder(npc: NPC): NPCHolder | undefined {
   <VContainer>
     <VRow dense>
       <VCol cols="12" lg="9">
-        <BiomeSelect v-model="selectedBiome" />
+        <BiomeSelect v-model="selectedBiome" :selected-npcs="selectedNpcs" />
       </VCol>
       <VCol cols="12" lg="3">
         <VBtn v-if="world.npcs.length" block color="primary" class="h-100" @click="addHouse">
@@ -104,7 +104,7 @@ function findNpcHolder(npc: NPC): NPCHolder | undefined {
     </VRow>
     <VRow dense>
       <VCol cols="12" sm="4" lg="3" xl="2">
-        <NPCSelect v-model="world.selected" :npc-holder="world" class="pa-2" @move-npc="moveNpc">
+        <NPCSelect v-model="world.selected" :npc-holder="world" :selected-biome="selectedBiome" class="pa-2" @move-npc="moveNpc">
           <div class="flex-full-text text-caption">Drag NPCs to Houses</div>
         </NPCSelect>
       </VCol>
@@ -124,7 +124,16 @@ function findNpcHolder(npc: NPC): NPCHolder | undefined {
                 clearable
                 hide-details
               />
-              <NPCSelect v-model="house.selected" :npc-holder="house" :house="house" min-height="50" class="pa-1" show-happiness @move-npc="moveNpc">
+              <NPCSelect
+                v-model="house.selected"
+                :npc-holder="house"
+                :house="house"
+                :selected-biome="selectedBiome"
+                min-height="50"
+                class="pa-1"
+                show-happiness
+                @move-npc="moveNpc"
+              >
                 <div class="flex-full-text text-caption">Drop NPCs Here</div>
               </NPCSelect>
             </VSheet>

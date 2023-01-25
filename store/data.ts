@@ -3,10 +3,11 @@ import biomeData from "~/assets/biomes.json";
 import npcData from "~/assets/npcs.json";
 import { Biome, BiomeData, NPC, NPCData } from "terraria";
 import { filename } from "pathe/utils";
+import { Ref } from "vue";
 
 export const useDataStore = defineStore("data", () => {
   const biomes = ref(biomeData as BiomeData);
-  const possibleBiomes = ref(Object.keys(biomes.value) as Biome[]);
+  const possibleBiomes: Ref<Biome[]> = ref(Object.keys(biomes.value) as Biome[]);
 
   const npcs = ref(npcData as NPCData);
   const possibleNpcs = ref(Object.keys(npcs.value) as NPC[]);

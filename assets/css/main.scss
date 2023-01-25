@@ -1,3 +1,6 @@
+@use "vuetify/settings" as v;
+@use "sass:color";
+
 .flex-full {
   flex-basis: 100% !important;
 
@@ -22,4 +25,25 @@
 
 .no-select {
   user-select: none;
+}
+
+$happiness: (
+  "very-excellent": map-get(v.$light-green, "accent-3"),
+  "excellent": map-get(v.$light-green, "accent-2"),
+  "good": map-get(v.$light-green, "accent-1"),
+  "ok": map-get(v.$lime, "accent-1"),
+  "normal": map-get(v.$yellow, "lighten-2"),
+  "bad": map-get(v.$red, "lighten-1"),
+);
+
+@each $state, $color in $happiness {
+  .happiness-#{$state} {
+    &-text {
+      color: $color;
+    }
+
+    &-bg {
+      background-color: color.change($color, $alpha: 0.6) !important;
+    }
+  }
 }

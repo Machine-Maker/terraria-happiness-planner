@@ -1,11 +1,10 @@
 {
   "private": true,
   "scripts": {
-    "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "lint": "eslint --ext \".js,.vue,.ts,.html,.json\" --ignore-path .gitignore ."
   },
   "devDependencies": {
     "@mdi/font": "^7.1.96",

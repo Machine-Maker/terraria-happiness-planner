@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import { Attitude, AttitudeCause, HappinessModifier, HappinessResult, HousingGroup, type NPC, NPCHolder } from "terraria";
+import { Attitude, AttitudeCause, Biome, HappinessModifier, HappinessResult, HousingGroup, type NPC, NPCHolder } from "terraria";
 import { useDataStore } from "~/store/data";
 import { TerrariaDataTypes } from "~/types/enums";
+import { WritableComputedRef } from "vue";
 
 const attitudeHappiness: { [k in Attitude]: number } = {
   love: -0.12,
@@ -16,10 +17,12 @@ const props = withDefaults(
     modelValue: NPC[];
     showHappiness?: boolean;
     house?: HousingGroup;
+    selectedBiome?: Biome;
   }>(),
   {
     showHappiness: false,
     house: undefined, // TODO why is this needed?
+    selectedBiome: undefined, // TODO this seems to be a bug
   }
 );
 
@@ -28,7 +31,29 @@ const emit = defineEmits<{
   (e: "moveNpc", npc: NPC, newHolder: NPCHolder): void;
 }>();
 
+const modelProp: WritableComputedRef<NPC[]> = computed({
+  get: () => props.modelValue,
+  set: (val) => emit("update:modelValue", val),
+});
+
 const dataStore = useDataStore();
+
+function onDrag(event: DragEvent) {
+  if (event.target instanceof HTMLElement && window.visualViewport) {
+    let deltaY = 0;
+    if (event.clientY < event.target.clientHeight) {
+      deltaY = -event.target.clientHeight;
+    } else if (event.clientY > window.visualViewport.height - document.getElementById("footer")!.clientHeight - event.target.clientHeight) {
+      deltaY = event.target.clientHeight;
+    }
+    if (deltaY != 0) {
+      window.scrollBy({
+        top: deltaY,
+        behavior: "smooth",
+      });
+    }
+  }
+}
 
 function onNpcDragStart(event: DragEvent, npc: NPC) {
   if (event.dataTransfer) {
@@ -128,14 +153,7 @@ function calculateNpcNeighborsHappiness(house: HousingGroup, npc: NPC, modifiers
     @drop="dropNpc($event, npcHolder)"
   >
     <slot />
-    <VItemGroup
-      v-if="npcHolder.npcs.length"
-      :model-value="modelValue"
-      multiple
-      selected-class="selected"
-      class="d-flex flex-wrap flex-full"
-      @update:model-value="$emit('update:modelValue', $event)"
-    >
+    <VItemGroup v-if="npcHolder.npcs.length" v-model="modelProp" multiple selected-class="selected" class="d-flex flex-wrap flex-full">
       <NPCInfo
         v-for="npc in npcHolder.npcs"
         :key="`npc-${npc}`"
@@ -143,6 +161,7 @@ function calculateNpcNeighborsHappiness(house: HousingGroup, npc: NPC, modifiers
         :npc="npc"
         :image="dataStore.getNpcImage(npc)"
         @dragstart="onNpcDragStart($event, npc)"
+        @drag="onDrag"
       />
     </VItemGroup>
   </VSheet>

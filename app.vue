@@ -3,5 +3,6 @@
     <VMain>
       <NuxtPage />
     </VMain>
+    <PageFooter />
   </VApp>
 </template>

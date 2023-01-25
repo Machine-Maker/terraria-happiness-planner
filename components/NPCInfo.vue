@@ -14,20 +14,20 @@ const props = defineProps<{
 
 const textColor = computed(() => {
   if (!props.happiness) {
-    return "text-white";
+    return "";
   } else {
     if (props.happiness.result > 1) {
-      return "text-red-lighten-1";
+      return "happiness-bad-text";
     } else if (props.happiness.result == 1) {
-      return "text-yellow-lighten-2";
+      return "happiness-normal-text";
     } else if (props.happiness.result > 0.9) {
-      return "text-lime-accent-1";
+      return "happiness-ok-text";
     } else if (props.happiness.result > 0.85) {
-      return "text-light-green-accent-1";
+      return "happiness-good-text";
     } else if (props.happiness.result > 0.8) {
-      return "text-light-green-accent-2";
+      return "happiness-excellent-text";
     } else {
-      return "text-light-green-accent-3";
+      return "happiness-very-excellent-text";
     }
   }
 });
@@ -81,12 +81,8 @@ function printCause(modifier: HappinessModifier): string {
     border-color: darkgray;
     background-color: #0003;
 
-    &.happiness {
+    &:hover {
       background-color: #0005;
-
-      &:hover {
-        background-color: #0006;
-      }
     }
   }
 
@@ -95,12 +91,7 @@ function printCause(modifier: HappinessModifier): string {
   }
 
   &.happiness {
-    background-color: #0004;
     font-weight: bold;
-
-    &:hover {
-      background-color: #0006;
-    }
   }
 }
 

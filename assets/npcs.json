@@ -6,17 +6,9 @@
     },
     "npcs": {
       "love": [],
-      "like": [
-        "Clothier",
-        "Zoologist",
-        "Princess"
-      ],
-      "dislike": [
-        "Steampunker"
-      ],
-      "hate": [
-        "Painter"
-      ]
+      "like": ["Clothier", "Zoologist", "Princess"],
+      "dislike": ["Steampunker"],
+      "hate": ["Painter"]
     }
   },
   "Merchant": {
@@ -26,17 +18,9 @@
     },
     "npcs": {
       "love": [],
-      "like": [
-        "Golfer",
-        "Nurse",
-        "Princess"
-      ],
-      "dislike": [
-        "Tax Collector"
-      ],
-      "hate": [
-        "Angler"
-      ]
+      "like": ["Golfer", "Nurse", "Princess"],
+      "dislike": ["Tax Collector"],
+      "hate": ["Angler"]
     }
   },
   "Zoologist": {
@@ -45,19 +29,10 @@
       "dislike": "Desert"
     },
     "npcs": {
-      "love": [
-        "Witch Doctor"
-      ],
-      "like": [
-        "Golfer",
-        "Princess"
-      ],
-      "dislike": [
-        "Angler"
-      ],
-      "hate": [
-        "Arms Dealer"
-      ]
+      "love": ["Witch Doctor"],
+      "like": ["Golfer", "Princess"],
+      "dislike": ["Angler"],
+      "hate": ["Arms Dealer"]
     }
   },
   "Golfer": {
@@ -66,20 +41,10 @@
       "dislike": "Caverns"
     },
     "npcs": {
-      "love": [
-        "Angler"
-      ],
-      "like": [
-        "Painter",
-        "Zoologist",
-        "Princess"
-      ],
-      "dislike": [
-        "Pirate"
-      ],
-      "hate": [
-        "Merchant"
-      ]
+      "love": ["Angler"],
+      "like": ["Painter", "Zoologist", "Princess"],
+      "dislike": ["Pirate"],
+      "hate": ["Merchant"]
     }
   },
   "Nurse": {
@@ -88,20 +53,10 @@
       "dislike": "Snow"
     },
     "npcs": {
-      "love": [
-        "Arms Dealer"
-      ],
-      "like": [
-        "Wizard",
-        "Princess"
-      ],
-      "dislike": [
-        "Dryad",
-        "Party Girl"
-      ],
-      "hate": [
-        "Zoologist"
-      ]
+      "love": ["Arms Dealer"],
+      "like": ["Wizard", "Princess"],
+      "dislike": ["Dryad", "Party Girl"],
+      "hate": ["Zoologist"]
     }
   },
   "Tavernkeep": {
@@ -110,19 +65,10 @@
       "dislike": "Snow"
     },
     "npcs": {
-      "love": [
-        "Demolitionist"
-      ],
-      "like": [
-        "Goblin Tinkerer",
-        "Princess"
-      ],
-      "dislike": [
-        "Guide"
-      ],
-      "hate": [
-        "Dye Trader"
-      ]
+      "love": ["Demolitionist"],
+      "like": ["Goblin Tinkerer", "Princess"],
+      "dislike": ["Guide"],
+      "hate": ["Dye Trader"]
     }
   },
   "Party Girl": {
@@ -131,20 +77,10 @@
       "dislike": "Caverns"
     },
     "npcs": {
-      "love": [
-        "Wizard",
-        "Zoologist"
-      ],
-      "like": [
-        "Stylist",
-        "Princess"
-      ],
-      "dislike": [
-        "Merchant"
-      ],
-      "hate": [
-        "Tax Collector"
-      ]
+      "love": ["Wizard", "Zoologist"],
+      "like": ["Stylist", "Princess"],
+      "dislike": ["Merchant"],
+      "hate": ["Tax Collector"]
     }
   },
   "Wizard": {
@@ -153,19 +89,10 @@
       "dislike": "Ocean"
     },
     "npcs": {
-      "love": [
-        "Golfer"
-      ],
-      "like": [
-        "Merchant",
-        "Princess"
-      ],
-      "dislike": [
-        "Witch Doctor"
-      ],
-      "hate": [
-        "Cyborg"
-      ]
+      "love": ["Golfer"],
+      "like": ["Merchant", "Princess"],
+      "dislike": ["Witch Doctor"],
+      "hate": ["Cyborg"]
     }
   },
   "Demolitionist": {
@@ -174,17 +101,9 @@
       "dislike": "Ocean"
     },
     "npcs": {
-      "love": [
-        "Tavernkeep"
-      ],
-      "like": [
-        "Mechanic",
-        "Princess"
-      ],
-      "dislike": [
-        "Arms Dealer",
-        "Goblin Tinkerer"
-      ],
+      "love": ["Tavernkeep"],
+      "like": ["Mechanic", "Princess"],
+      "dislike": ["Arms Dealer", "Goblin Tinkerer"],
       "hate": []
     }
   },
@@ -194,19 +113,10 @@
       "dislike": "Jungle"
     },
     "npcs": {
-      "love": [
-        "Mechanic"
-      ],
-      "like": [
-        "Dye Trader",
-        "Princess"
-      ],
-      "dislike": [
-        "Clothier"
-      ],
-      "hate": [
-        "Stylist"
-      ]
+      "love": ["Mechanic"],
+      "like": ["Dye Trader", "Princess"],
+      "dislike": ["Clothier"],
+      "hate": ["Stylist"]
     }
   },
   "Clothier": {
@@ -215,19 +125,10 @@
       "dislike": "Hallow"
     },
     "npcs": {
-      "love": [
-        "Truffle"
-      ],
-      "like": [
-        "Tax Collector",
-        "Princess"
-      ],
-      "dislike": [
-        "Nurse"
-      ],
-      "hate": [
-        "Mechanic"
-      ]
+      "love": ["Truffle"],
+      "like": ["Tax Collector", "Princess"],
+      "dislike": ["Nurse"],
+      "hate": ["Mechanic"]
     }
   },
   "Dye Trader": {
@@ -237,17 +138,9 @@
     },
     "npcs": {
       "love": [],
-      "like": [
-        "Arms Dealer",
-        "Painter",
-        "Princess"
-      ],
-      "dislike": [
-        "Steampunker"
-      ],
-      "hate": [
-        "Pirate"
-      ]
+      "like": ["Arms Dealer", "Painter", "Princess"],
+      "dislike": ["Steampunker"],
+      "hate": ["Pirate"]
     }
   },
   "Arms Dealer": {
@@ -256,19 +149,10 @@
       "dislike": "Snow"
     },
     "npcs": {
-      "love": [
-        "Nurse"
-      ],
-      "like": [
-        "Steampunker",
-        "Princess"
-      ],
-      "dislike": [
-        "Golfer"
-      ],
-      "hate": [
-        "Demolitionist"
-      ]
+      "love": ["Nurse"],
+      "like": ["Steampunker", "Princess"],
+      "dislike": ["Golfer"],
+      "hate": ["Demolitionist"]
     }
   },
   "Steampunker": {
@@ -277,18 +161,9 @@
       "dislike": "Jungle"
     },
     "npcs": {
-      "love": [
-        "Cyborg"
-      ],
-      "like": [
-        "Painter",
-        "Princess"
-      ],
-      "dislike": [
-        "Dryad",
-        "Wizard",
-        "Party Girl"
-      ],
+      "love": ["Cyborg"],
+      "like": ["Painter", "Princess"],
+      "dislike": ["Dryad", "Wizard", "Party Girl"],
       "hate": []
     }
   },
@@ -299,17 +174,9 @@
     },
     "npcs": {
       "love": [],
-      "like": [
-        "Witch Doctor",
-        "Truffle",
-        "Princess"
-      ],
-      "dislike": [
-        "Angler"
-      ],
-      "hate": [
-        "Golfer"
-      ]
+      "like": ["Witch Doctor", "Truffle", "Princess"],
+      "dislike": ["Angler"],
+      "hate": ["Golfer"]
     }
   },
   "Painter": {
@@ -318,17 +185,9 @@
       "dislike": "Forest"
     },
     "npcs": {
-      "love": [
-        "Dryad"
-      ],
-      "like": [
-        "Party Girl",
-        "Princess"
-      ],
-      "dislike": [
-        "Truffle",
-        "Cyborg"
-      ],
+      "love": ["Dryad"],
+      "like": ["Party Girl", "Princess"],
+      "dislike": ["Truffle", "Cyborg"],
       "hate": []
     }
   },
@@ -339,17 +198,9 @@
     },
     "npcs": {
       "love": [],
-      "like": [
-        "Dryad",
-        "Guide",
-        "Princess"
-      ],
-      "dislike": [
-        "Nurse"
-      ],
-      "hate": [
-        "Truffle"
-      ]
+      "like": ["Dryad", "Guide", "Princess"],
+      "dislike": ["Nurse"],
+      "hate": ["Truffle"]
     }
   },
   "Stylist": {
@@ -358,19 +209,10 @@
       "dislike": "Snow"
     },
     "npcs": {
-      "love": [
-        "Dye Trader"
-      ],
-      "like": [
-        "Pirate",
-        "Princess"
-      ],
-      "dislike": [
-        "Tavernkeep"
-      ],
-      "hate": [
-        "Goblin Tinkerer"
-      ]
+      "love": ["Dye Trader"],
+      "like": ["Pirate", "Princess"],
+      "dislike": ["Tavernkeep"],
+      "hate": ["Goblin Tinkerer"]
     }
   },
   "Angler": {
@@ -380,16 +222,9 @@
     },
     "npcs": {
       "love": [],
-      "like": [
-        "Demolitionist",
-        "Party Girl",
-        "Tax Collector",
-        "Princess"
-      ],
+      "like": ["Demolitionist", "Party Girl", "Tax Collector", "Princess"],
       "dislike": [],
-      "hate": [
-        "Tavernkeep"
-      ]
+      "hate": ["Tavernkeep"]
     }
   },
   "Pirate": {
@@ -398,19 +233,10 @@
       "dislike": "Caverns"
     },
     "npcs": {
-      "love": [
-        "Angler"
-      ],
-      "like": [
-        "Tavernkeep",
-        "Princess"
-      ],
-      "dislike": [
-        "Stylist"
-      ],
-      "hate": [
-        "Guide"
-      ]
+      "love": ["Angler"],
+      "like": ["Tavernkeep", "Princess"],
+      "dislike": ["Stylist"],
+      "hate": ["Guide"]
     }
   },
   "Mechanic": {
@@ -419,19 +245,10 @@
       "dislike": "Caverns"
     },
     "npcs": {
-      "love": [
-        "Goblin Tinkerer"
-      ],
-      "like": [
-        "Cyborg",
-        "Princess"
-      ],
-      "dislike": [
-        "Arms Dealer"
-      ],
-      "hate": [
-        "Clothier"
-      ]
+      "love": ["Goblin Tinkerer"],
+      "like": ["Cyborg", "Princess"],
+      "dislike": ["Arms Dealer"],
+      "hate": ["Clothier"]
     }
   },
   "Tax Collector": {
@@ -440,20 +257,10 @@
       "dislike": "Hallow"
     },
     "npcs": {
-      "love": [
-        "Merchant"
-      ],
-      "like": [
-        "Party Girl",
-        "Princess"
-      ],
-      "dislike": [
-        "Demolitionist",
-        "Mechanic"
-      ],
-      "hate": [
-        "Santa Claus"
-      ]
+      "love": ["Merchant"],
+      "like": ["Party Girl", "Princess"],
+      "dislike": ["Demolitionist", "Mechanic"],
+      "hate": ["Santa Claus"]
     }
   },
   "Cyborg": {
@@ -463,18 +270,9 @@
     },
     "npcs": {
       "love": [],
-      "like": [
-        "Steampunker",
-        "Pirate",
-        "Stylist",
-        "Princess"
-      ],
-      "dislike": [
-        "Zoologist"
-      ],
-      "hate": [
-        "Wizard"
-      ]
+      "like": ["Steampunker", "Pirate", "Stylist", "Princess"],
+      "dislike": ["Zoologist"],
+      "hate": ["Wizard"]
     }
   },
   "Santa Claus": {
@@ -486,9 +284,7 @@
       "love": [],
       "like": [],
       "dislike": [],
-      "hate": [
-        "Tax Collector"
-      ]
+      "hate": ["Tax Collector"]
     }
   },
   "Truffle": {
@@ -496,19 +292,10 @@
       "like": "Mushroom"
     },
     "npcs": {
-      "love": [
-        "Guide"
-      ],
-      "like": [
-        "Dryad",
-        "Princess"
-      ],
-      "dislike": [
-        "Clothier"
-      ],
-      "hate": [
-        "Witch Doctor"
-      ]
+      "love": ["Guide"],
+      "like": ["Dryad", "Princess"],
+      "dislike": ["Clothier"],
+      "hate": ["Witch Doctor"]
     }
   },
   "Princess": {

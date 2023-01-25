@@ -1,0 +1,7 @@
+/node_modules/**
+/.nuxt/**
+/dist/**
+pnpm-lock.yaml
+.idea/**
+.output/**
+public/**
