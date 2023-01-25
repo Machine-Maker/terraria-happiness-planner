@@ -78,7 +78,7 @@ function printCause(modifier: HappinessModifier): string {
   box-sizing: border-box;
 
   &.selected {
-    border-color: darkgray;
+    border-color: #0009;
     background-color: #0003;
 
     &:hover {

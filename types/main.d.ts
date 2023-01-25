@@ -42,4 +42,9 @@ declare module "terraria" {
     result: number;
     modifiers: HappinessModifier[];
   };
+
+  type HappinessClass = {
+    class: string;
+    level: number;
+  };
 }

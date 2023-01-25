@@ -28,12 +28,12 @@
 }
 
 $happiness: (
-  "very-excellent": map-get(v.$light-green, "accent-3"),
-  "excellent": map-get(v.$light-green, "accent-2"),
-  "good": map-get(v.$light-green, "accent-1"),
-  "ok": map-get(v.$lime, "accent-1"),
-  "normal": map-get(v.$yellow, "lighten-2"),
-  "bad": map-get(v.$red, "lighten-1"),
+        "very-excellent": map-get(v.$light-green, "accent-3"),
+        "excellent": map-get(v.$light-green, "accent-2"),
+        "good": map-get(v.$light-green, "accent-1"),
+        "ok": map-get(v.$lime, "accent-1"),
+        "normal": map-get(v.$yellow, "lighten-2"),
+        "bad": map-get(v.$red, "lighten-1"),
 );
 
 @each $state, $color in $happiness {
@@ -43,7 +43,8 @@ $happiness: (
     }
 
     &-bg {
-      background-color: color.change($color, $alpha: 0.6) !important;
+      background-color: color.change($color, $alpha: 0.7) !important;
+      text-shadow: color.change($color, $lightness: 34%) 1px 1px;
     }
   }
 }

@@ -77,6 +77,10 @@ function moveNpc(npc: NPC, newHolder: NPCHolder, currentHolder?: NPCHolder) {
     npcLog("Moving npc %s from current holder %s to new holder %s", npc, "houses" in currentNpcHolder ? "'world'" : "'house'");
     currentNpcHolder.npcs = currentNpcHolder.npcs.filter((v) => v !== npc);
     newHolder.npcs.push(npc);
+    if (currentNpcHolder.selected.includes(npc)) {
+      currentNpcHolder.selected = currentNpcHolder.selected.filter((v) => v !== npc);
+      newHolder.selected.push(npc);
+    }
   }
 }
 

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Attitude, AttitudeCause, Biome, HappinessModifier, HappinessResult, HousingGroup, type NPC, NPCHolder } from "terraria";
+import { Attitude, AttitudeCause, Biome, HappinessClass, HappinessModifier, HappinessResult, HousingGroup, type NPC, NPCHolder } from "terraria";
 import { useDataStore } from "~/store/data";
 import { TerrariaDataTypes } from "~/types/enums";
 import { WritableComputedRef } from "vue";
@@ -140,6 +140,36 @@ function calculateNpcNeighborsHappiness(house: HousingGroup, npc: NPC, modifiers
   }
   return happinessDelta;
 }
+
+function getHighlightClass(npc: NPC) {
+  if (props.selectedBiome) {
+    const biomeData = dataStore.npcs[npc].biomes;
+    if (biomeData.love == props.selectedBiome) {
+      return "happiness-very-excellent-bg";
+    } else if (biomeData.like == props.selectedBiome) {
+      return "happiness-excellent-bg";
+    } else if (biomeData.dislike == props.selectedBiome || biomeData.hate == props.selectedBiome) {
+      return "happiness-bad-bg";
+    }
+  } else if (modelProp.value.length) {
+    let result: HappinessClass | undefined;
+    for (const selectedNpc of modelProp.value) {
+      const npcNpcData = dataStore.npcs[selectedNpc].npcs;
+      if (npcNpcData.love.includes(npc)) {
+        if (!result || result.level > 0) {
+          result = { class: "happiness-very-excellent-bg", level: 2 };
+        }
+      } else if (npcNpcData.like.includes(npc)) {
+        if (!result || (result.level > 0 && result.level < 2)) {
+          result = { class: "happiness-excellent-bg", level: 1 };
+        }
+      } else if (npcNpcData.dislike.includes(npc) || npcNpcData.hate.includes(npc)) {
+        result = { class: "happiness-bad-bg", level: -1 };
+      }
+    }
+    return result?.class || "";
+  }
+}
 </script>
 
 <template>
@@ -160,6 +190,7 @@ function calculateNpcNeighborsHappiness(house: HousingGroup, npc: NPC, modifiers
         :happiness="calculateHappiness(npc)"
         :npc="npc"
         :image="dataStore.getNpcImage(npc)"
+        :class="getHighlightClass(npc)"
         @dragstart="onNpcDragStart($event, npc)"
         @drag="onDrag"
       />

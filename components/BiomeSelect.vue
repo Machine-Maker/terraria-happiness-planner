@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Biome, NPC } from "terraria";
+import { Biome, HappinessClass, NPC } from "terraria";
 import { useDataStore } from "~/store/data";
 import { WritableComputedRef } from "vue";
 
@@ -19,14 +19,9 @@ const modelProp: WritableComputedRef<Biome | undefined> = computed({
 
 const dataStore = useDataStore();
 
-type HappinessResult = {
-  class: string;
-  level: number;
-};
-
 function getHighlightClass(biome: Biome) {
   if (props.selectedNpcs.length) {
-    let result: HappinessResult | undefined;
+    let result: HappinessClass | undefined;
     for (const selectedNpc of props.selectedNpcs) {
       const npcBiomeData = dataStore.npcs[selectedNpc].biomes;
       if (npcBiomeData.love === biome) {
