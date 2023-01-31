@@ -18,6 +18,7 @@ const props = withDefaults(
     showHappiness?: boolean;
     house?: HousingGroup;
     selectedBiome?: Biome;
+    selectedNpcs: NPC[];
   }>(),
   {
     showHappiness: false,
@@ -151,9 +152,9 @@ function getHighlightClass(npc: NPC) {
     } else if (biomeData.dislike == props.selectedBiome || biomeData.hate == props.selectedBiome) {
       return "happiness-bad-bg";
     }
-  } else if (modelProp.value.length) {
+  } else if (props.selectedNpcs.length) {
     let result: HappinessClass | undefined;
-    for (const selectedNpc of modelProp.value) {
+    for (const selectedNpc of props.selectedNpcs) {
       const npcNpcData = dataStore.npcs[selectedNpc].npcs;
       if (npcNpcData.love.includes(npc)) {
         if (!result || result.level > 0) {

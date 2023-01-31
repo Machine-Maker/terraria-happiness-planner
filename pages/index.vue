@@ -44,6 +44,9 @@ watch(world, () => refreshCanLoad());
 const canLoad: Ref<boolean> = ref(false);
 onMounted(() => {
   refreshCanLoad();
+  if (canLoad.value) {
+    load();
+  }
 });
 
 function refreshCanLoad() {
@@ -169,7 +172,7 @@ function findNpcHolder(npc: NPC): NPCHolder | undefined {
     </VRow>
     <VRow dense>
       <VCol cols="12" sm="4" lg="3" xl="2">
-        <NPCSelect v-model="world.selected" :npc-holder="world" :selected-biome="selectedBiome" class="pa-2" @move-npc="moveNpc">
+        <NPCSelect v-model="world.selected" :npc-holder="world" :selected-biome="selectedBiome" :selected-npcs="selectedNpcs" class="pa-2" @move-npc="moveNpc">
           <div class="flex-full-text text-caption">Drag NPCs to Houses</div>
         </NPCSelect>
       </VCol>
@@ -194,6 +197,7 @@ function findNpcHolder(npc: NPC): NPCHolder | undefined {
                 :npc-holder="house"
                 :house="house"
                 :selected-biome="selectedBiome"
+                :selected-npcs="selectedNpcs"
                 min-height="50"
                 class="pa-1"
                 show-happiness
