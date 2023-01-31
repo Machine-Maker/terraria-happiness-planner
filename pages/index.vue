@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Biome, HousingGroup, HousingWorld, type NPC, NPCHolder } from "terraria";
+import { Biome, HousingGroup, HousingWorld, type NPC, NPCHolder, SavedHousingWorld, SavedWorlds } from "terraria";
 import { ComputedRef, Ref } from "vue";
 import { useDataStore } from "~/store/data";
 import NPCSelect from "~/components/NPCSelect.vue";
@@ -26,6 +26,7 @@ watch(selectedNpcs, (newVal) => {
   if (newVal.length) {
     selectedBiome.value = undefined;
   }
+  refreshCanLoad();
 });
 
 watch(selectedBiome, (newVal) => {
@@ -35,7 +36,54 @@ watch(selectedBiome, (newVal) => {
       house.selected = [];
     }
   }
+  refreshCanLoad();
 });
+
+watch(world, () => refreshCanLoad());
+
+const canLoad: Ref<boolean> = ref(false);
+onMounted(() => {
+  refreshCanLoad();
+});
+
+function refreshCanLoad() {
+  if (process.server || world.value.houses.length) {
+    return false;
+  }
+  const defaultWorld = (JSON.parse(window.localStorage.getItem("worlds") || "{}") as SavedWorlds)["__default"];
+  canLoad.value = !!defaultWorld;
+}
+
+function load() {
+  if (process.server) return;
+  const worldsData = JSON.parse(window.localStorage.getItem("worlds") || "{}") as SavedWorlds;
+  if (!worldsData.__default) return;
+  clear();
+  world.value.houses = worldsData.__default.houses.map((h) => ({ npcs: h.npcs, selected: [], biomes: h.biomes }));
+  world.value.npcs = [...worldsData.__default.npcs];
+}
+
+function save() {
+  if (process.server) return;
+  const defaultWorldData: SavedHousingWorld = {
+    houses: world.value.houses.map((h) => ({ npcs: h.npcs, biomes: h.biomes })),
+    npcs: [...world.value.npcs],
+  };
+  const worldsData: SavedWorlds = {
+    __default: defaultWorldData,
+  };
+  window.localStorage.setItem("worlds", JSON.stringify(worldsData));
+  refreshCanLoad();
+}
+
+function clear() {
+  world.value = {
+    houses: [],
+    npcs: [...dataStore.possibleNpcs],
+    selected: [],
+  };
+  selectedBiome.value = undefined;
+}
 
 function addHouse() {
   const house: HousingGroup = {
@@ -95,6 +143,19 @@ function findNpcHolder(npc: NPC): NPCHolder | undefined {
 
 <template>
   <VContainer>
+    <VRow dense>
+      <VCol cols="12" sm="4">
+        <VBtn :disabled="!canLoad" color="primary" prepend-icon="mdi-download" block @click="load">Load</VBtn>
+      </VCol>
+      <VCol cols="12" sm="4">
+        <VBtn :disabled="!world.houses.length" color="primary" prepend-icon="mdi-content-save" block @click="save">Save</VBtn>
+      </VCol>
+      <VCol cols="12" sm="4">
+        <VBtn :disabled="!(world.houses.length || world.selected.length || selectedBiome)" color="primary" prepend-icon="mdi-backspace" block @click="clear">
+          Clear
+        </VBtn>
+      </VCol>
+    </VRow>
     <VRow dense>
       <VCol cols="12" lg="9">
         <BiomeSelect v-model="selectedBiome" :selected-npcs="selectedNpcs" />

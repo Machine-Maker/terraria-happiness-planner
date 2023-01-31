@@ -23,8 +23,19 @@ declare module "terraria" {
     biomes: Biome[];
   };
 
+  type SavedHousingGroup = Omit<HousingGroup, "selected">;
+
   type HousingWorld = NPCHolder & {
     houses: HousingGroup[];
+  };
+
+  type SavedHousingWorld = Omit<NPCHolder, "selected"> & {
+    houses: SavedHousingGroup[];
+  };
+
+  type SavedWorlds = {
+    __default?: SavedHousingWorld;
+    [key: string]: SavedHousingWorld;
   };
 
   type HappinessModifier = {
