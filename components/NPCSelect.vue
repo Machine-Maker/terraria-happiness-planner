@@ -47,6 +47,7 @@ function onDrag(event: DragEvent) {
     } else if (event.clientY > window.visualViewport.height - document.getElementById("footer")!.clientHeight - event.target.clientHeight) {
       deltaY = event.target.clientHeight;
     }
+    deltaY *= 2;
     if (deltaY != 0) {
       window.scrollBy({
         top: deltaY,
@@ -101,10 +102,14 @@ function calculateHappiness(npc: NPC): HappinessResult | undefined {
     happiness += -0.05;
     modifiers.push({ amount: -0.05, cause: "solitude" });
   }
-  happiness += calculateNpcBiomeHappiness(props.house, npc, modifiers, "love");
-  happiness += calculateNpcBiomeHappiness(props.house, npc, modifiers, "like");
-  happiness += calculateNpcBiomeHappiness(props.house, npc, modifiers, "dislike");
-  happiness += calculateNpcBiomeHappiness(props.house, npc, modifiers, "hate");
+
+  for (const attitude of ["love", "like", "dislike", "hate"] as Attitude[]) {
+    const happinessDelta = calculateNpcBiomeHappiness(props.house, npc, modifiers, attitude);
+    happiness += happinessDelta;
+    if (happinessDelta != 0 && (attitude === "love" || attitude === "like")) {
+      break;
+    }
+  }
 
   happiness += calculateNpcNeighborsHappiness(props.house, npc, modifiers, "love");
   happiness += calculateNpcNeighborsHappiness(props.house, npc, modifiers, "like");
