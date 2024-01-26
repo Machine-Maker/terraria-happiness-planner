@@ -32,7 +32,7 @@ jobs:
       - name: Build
         id: build-site
         run: |
-          pnpm install
+          pnpm install --no-frozen-lockfile
           pnpm generate
           echo "COMMIT_MSG=$(git log --format=reference -1)" >> $GITHUB_OUTPUT
       - uses: JamesIves/github-pages-deploy-action@v4.4.1
