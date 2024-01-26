@@ -4,7 +4,7 @@ export default {
 };
 </script>
 <script setup lang="ts">
-import { HappinessModifier, HappinessResult, NPC } from "terraria";
+import type { HappinessModifier, HappinessResult, NPC } from "~/types/terraria";
 
 const props = defineProps<{
   npc: NPC;

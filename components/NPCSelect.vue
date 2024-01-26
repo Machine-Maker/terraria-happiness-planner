@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { Attitude, AttitudeCause, Biome, HappinessClass, HappinessModifier, HappinessResult, HousingGroup, type NPC, NPCHolder } from "terraria";
+import type { Attitude, AttitudeCause, Biome, HappinessClass, HappinessModifier, HappinessResult, HousingGroup, NPC, NPCHolder } from "~/types/terraria";
 import { useDataStore } from "~/store/data";
 import { TerrariaDataTypes } from "~/types/enums";
-import { WritableComputedRef } from "vue";
+import type { WritableComputedRef } from "vue";
 
 const attitudeHappiness: { [k in Attitude]: number } = {
   love: -0.12,

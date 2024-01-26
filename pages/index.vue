@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { Biome, HousingGroup, HousingWorld, type NPC, NPCHolder, SavedHousingWorld, SavedWorlds } from "terraria";
-import { ComputedRef, Ref } from "vue";
+import type { Biome, HousingGroup, HousingWorld, NPC, NPCHolder, SavedHousingWorld, SavedWorlds } from "~/types/terraria";
+import { type ComputedRef, type Ref } from "vue";
 import { useDataStore } from "~/store/data";
 import NPCSelect from "~/components/NPCSelect.vue";
 

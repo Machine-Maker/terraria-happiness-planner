@@ -1,9 +1,9 @@
 import { defineStore } from "pinia";
 import biomeData from "~/assets/biomes.json";
 import npcData from "~/assets/npcs.json";
-import { Biome, BiomeData, NPC, NPCData } from "terraria";
+import type { Biome, BiomeData, NPC, NPCData } from "~/types/terraria";
 import { filename } from "pathe/utils";
-import { Ref } from "vue";
+import type { Ref } from "vue";
 
 export const useDataStore = defineStore("data", () => {
   const biomes = ref(biomeData as BiomeData);

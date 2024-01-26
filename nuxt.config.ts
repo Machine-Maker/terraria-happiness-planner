@@ -7,6 +7,9 @@ export default defineNuxtConfig({
   build: {
     transpile: ["vuetify"],
   },
+  typescript: {
+    typeCheck: true,
+  },
   app: {
     head: {
       title: "Terraria - NPC Planner",

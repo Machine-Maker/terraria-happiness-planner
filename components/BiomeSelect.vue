@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { Biome, HappinessClass, NPC } from "terraria";
+import type { Biome, HappinessClass, NPC } from "~/types/terraria";
 import { useDataStore } from "~/store/data";
-import { WritableComputedRef } from "vue";
+import type { WritableComputedRef } from "vue";
 
 const props = defineProps<{
   modelValue?: Biome;
