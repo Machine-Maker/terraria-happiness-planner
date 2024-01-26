@@ -23,16 +23,16 @@ jobs:
       - uses: pnpm/action-setup@v2
         name: Setup pnpm
         with:
-          version: ^7.25.0
+          version: ^8.14.0
       - uses: actions/setup-node@v3
-        name: Setup NodeJS 18
+        name: Setup NodeJS 20
         with:
-          node-version: 18
+          node-version: 20
           cache: pnpm
       - name: Build
         id: build-site
         run: |
-          pnpm install --no-frozen-lockfile
+          pnpm install
           pnpm generate
           echo "COMMIT_MSG=$(git log --format=reference -1)" >> $GITHUB_OUTPUT
       - uses: JamesIves/github-pages-deploy-action@v4.4.1
