@@ -10,6 +10,7 @@ export default defineNuxtConfig({
   typescript: {
     typeCheck: true,
   },
+  srcDir: "src",
   app: {
     head: {
       title: "Terraria - NPC Planner",
